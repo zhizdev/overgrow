@@ -1,0 +1,29 @@
+knowledge/dump/
+
+# Dependencies
+node_modules/
+
+# Generated files
+dist/
+build/
+
+# Build artifacts
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+
+# Cloudflare
+.wrangler/
+
+# User design context
+.impeccable.md

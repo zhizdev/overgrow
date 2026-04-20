@@ -1,0 +1,37 @@
+name: Verify build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Rebuild from source
+        run: bun run rebuild
+
+      - name: Run tests
+        run: bun test
+
+      - name: Fail if committed output is stale
+        run: |
+          if ! git diff --quiet .claude .cursor .gemini .codex; then
+            echo "::error::Committed build output is out of sync with source/."
+            echo "Run 'bun run rebuild' locally and commit the changes to .claude/, .cursor/, .gemini/, and .codex/."
+            echo ""
+            echo "Diff:"
+            git --no-pager diff .claude .cursor .gemini .codex
+            exit 1
+          fi
+          echo "Build output matches source."

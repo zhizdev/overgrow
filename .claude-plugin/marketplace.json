@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "overgrow",
+  "metadata": {
+    "description": "SEO + GEO toolkit for growth engineers — site inventory, on-page audit, query-fanout page & blog spawning, semantic internal linking, sitemap/robots, and AI-text humanization."
+  },
+  "owner": {
+    "name": "zhizhuo"
+  },
+  "plugins": [
+    {
+      "name": "overgrow",
+      "description": "SEO + GEO toolkit for growth engineers. 7 skills (init, audit, spawn-pages, spawn-blogs, spawn-internal-links, sitemap, humanize) to inventory pages, audit on-page signals, spawn landing pages and blogs via query-fanout, wire semantic internal links, build sitemap/robots, and humanize AI-sounding copy.",
+      "version": "0.2.0",
+      "author": {
+        "name": "zhizhuo"
+      },
+      "source": "./",
+      "category": "content",
+      "homepage": "https://github.com/zhizdev/overgrow",
+      "tags": ["seo", "geo", "growth", "landing-page", "blog", "content-generation", "sitemap", "internal-links", "query-fanout", "humanize"]
+    }
+  ]
+}

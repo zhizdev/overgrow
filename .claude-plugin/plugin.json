@@ -1,0 +1,12 @@
+{
+  "name": "overgrow",
+  "description": "SEO + GEO toolkit for growth engineers. 7 skills (init, audit, spawn-pages, spawn-blogs, spawn-internal-links, sitemap, humanize) to inventory pages, audit on-page signals, spawn landing pages and blogs via query-fanout, wire semantic internal links, build sitemap/robots, and humanize AI-sounding copy.",
+  "version": "0.2.0",
+  "author": {
+    "name": "zhizhuo"
+  },
+  "homepage": "https://github.com/zhizdev/overgrow",
+  "repository": "https://github.com/zhizdev/overgrow",
+  "license": "MIT",
+  "skills": "./.claude/skills"
+}
