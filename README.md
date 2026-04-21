@@ -10,21 +10,21 @@ Overgrow is your AI CMO as a plugin, with a comprehrensive suite of commands to 
 
 ### Commands
 `/overgrow:init`  
-    Scans the repo to build an understanding of the existing project.   
+    &emsp;Scans the repo to build an understanding of the existing project.   
 `/overgrow:audit`  
-    Check titles, meta, H-hierarchy, canonicals, OG, JSON-LD schema, content depth, internal links, AI-citation readiness  
+    &emsp;Check titles, meta, H-hierarchy, canonicals, OG, JSON-LD schema, content depth, internal links, AI-citation readiness  
 `/overgrow:spawn-pages`  
-    Draft landing pages that target query fan-out patterns to maximize AI visibility.   
+    &emsp;Draft landing pages that target query fan-out patterns to maximize AI visibility.   
 `/overgrow:spawn-blogs`  
-    Draft blogs that target query fan-out patterns to maximize AI visibility.   
+    &emsp;Draft blogs that target query fan-out patterns to maximize AI visibility.   
 `/overgrow:spawn-internal-links`  
-    Build a citadel of internals links around semantic pillars.   
+    &emsp;Build a citadel of internals links around semantic pillars.   
 `/overgrow:sitemap`  
-    Audit or build `sitemap.xml` + `robots.txt` to maximize growth.  
+    &emsp;Audit or build `sitemap.xml` + `robots.txt` to maximize growth.  
 `/overgrow:llmstxt`  
-    Audit or build `/llms.txt` to maximize growth.   
+    &emsp;Audit or build `/llms.txt` to maximize growth.   
 `/overgrow:humanize`  
-    Make it sounds human.   
+    &emsp;Make it sounds human.   
 
 #### Usage examples
 
