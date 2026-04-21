@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Overgrow" width="480">
+  <img src="assets/banner.svg" alt="Overgrow" width="540">
 </p>
 
 # Overgrow - The Scientific AI CMO Plugin

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" shape-rendering="crispEdges" role="img" aria-label="Overgrow — Claude mascot, bonemeal, growing wheat">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336 120" shape-rendering="crispEdges" role="img" aria-label="Overgrow — Claude mascot, bonemeal, growing wheat">
   <title>Overgrow</title>
 
   <!-- MASCOT: 16x10 → render 96x60, bottom-aligned to baseline y=132 -->
-  <svg x="72" y="72" width="96" height="60" viewBox="0 0 16 10">
+  <svg x="0" y="60" width="96" height="60" viewBox="0 0 16 10">
     <g fill="#D97757">
       <rect x="2" y="0" width="12" height="8"/>
       <rect x="0" y="4" width="2" height="2"/>
@@ -19,7 +19,7 @@
   </svg>
 
   <!-- BONEMEAL: 16x16 → render 96x96, bottom-aligned -->
-  <svg x="192" y="36" width="96" height="96" viewBox="0 0 16 16">
+  <svg x="120" y="24" width="96" height="96" viewBox="0 0 16 16">
     <g fill="#8a88a8">
       <rect x="4" y="1" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/>
       <rect x="3" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/>
@@ -74,7 +74,7 @@
   </svg>
 
   <!-- WHEAT GROWTH: 16x20 → render 96x120, bottom-aligned (baseline y=132) -->
-  <svg x="312" y="12" width="96" height="120" viewBox="0 0 16 20" preserveAspectRatio="xMidYMax meet">
+  <svg x="240" y="0" width="96" height="120" viewBox="0 0 16 20" preserveAspectRatio="xMidYMax meet">
     <title>Wheat growth cycle</title>
     <desc>8-stage pixel art wheat growth animation</desc>
     <g opacity="1">
