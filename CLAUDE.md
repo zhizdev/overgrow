@@ -2,7 +2,7 @@
 
 **Overgrow is an open-source SEO + GEO toolkit that lives inside your AI coding tool.** It scans your site, audits its on-page signals, and generates the landing pages, blog posts, internal links, and sitemap entries your product needs to show up in Google, ChatGPT, Claude, Perplexity, and Gemini.
 
-Distributed as a Claude Code plugin, with drop-in skill bundles for Cursor, Gemini CLI, and Codex. Seven commands, one source of truth, zero copy-paste from marketing blogs.
+Distributed as a Claude Code plugin, with drop-in skill bundles for Cursor, Gemini CLI, and Codex. Eight commands, one source of truth, zero copy-paste from marketing blogs.
 
 ---
 
@@ -33,7 +33,7 @@ Overgrow runs where the code is. It reads your framework's routes, it understand
 
 ---
 
-## The seven commands
+## The eight commands
 
 All user-invocable. Namespaced in Claude Code as `/overgrow:<name>`. On Codex the prefix is `$`.
 
@@ -67,6 +67,11 @@ Audit mode validates an existing `sitemap.xml` / `robots.txt` against sitemaps.o
 
 Produces: `sitemap.xml`, `robots.txt`, optional `.overgrow/sitemap-audit.md`.
 
+### `/overgrow:llmstxt` — LLM-legible site map
+Generates or audits a `/llms.txt` file at the site root per the Howard 2024 proposal. `llms.txt` is a curated markdown map of the site designed to be read by AI assistants **at inference time** — when a user asks ChatGPT, Claude, or Perplexity about the product, the assistant can pull this file into its context instead of scraping the site. Complements `sitemap.xml` (crawler index) without replacing it. Emits H1 + summary blockquote + H2 file lists, optionally including an `Instructions for AI assistants` positioning block and a `Localization` section for i18n sites. Can also generate companion `.md` versions of top pages when asked (`build --with-md`).
+
+Produces: `llms.txt` at the project's static root, optional `.md` companion pages, optional `.overgrow/llmstxt-audit.md`.
+
 ### `/overgrow:humanize` — deterministic AI-text cleanup
 Rewrites AI-generated or AI-sounding text through a fixed 4-phase pipeline: vocabulary replacement (banned words and phrases → plain alternatives), sentence structure fixes (kill -ing tail clauses, negative parallelisms, rule-of-three padding), structural removal (vague significance sentences, "despite challenges" boilerplate, unnamed expert attributions), and final checks (em-dash reduction, sentence-length variation, opening-word diversity). Every pass emits a change log of which rules fired.
 
@@ -96,6 +101,9 @@ Produces: rewritten text + structured change log. Safe for agentic automation �
                         │
                         ▼
               /overgrow:sitemap            →  sitemap.xml + robots.txt
+                        │
+                        ▼
+              /overgrow:llmstxt            →  llms.txt (AI-assistant site map)
 ```
 
 Each command reads the inventory, writes its output to a scoped file under `.overgrow/`, and feeds the next command in the chain. Rerunning `init` refreshes the foundation after structural edits.
@@ -132,6 +140,7 @@ Every skill reads authoritative guidance from the plugin's `knowledge/` director
 - **`knowledge/query-fanout.md`** — the 15-facet query fan-out taxonomy: DEFN, ENTITY, COMPARE, and 12 more retrieval intents extracted from empirical Claude/Gemini/ChatGPT behavior on shopping prompts. Referenced by `spawn-pages` and `spawn-blogs`.
 - **`knowledge/pages.md`** — H-tag hierarchy rules, AI-overview formatting, question-and-answer structure, scanability, engagement signals. Referenced by every skill that writes or audits page structure.
 - **`knowledge/sitemap.md`** — deterministic pipeline for `sitemap.xml` + `robots.txt`: input collection, shard rules, encoding, AI-crawler allowlists, audit checks. Authoritative for the sitemap skill.
+- **`knowledge/llms-txt.md`** — distilled `/llms.txt` spec: format order, link-list shape, section taxonomy per site type, companion `.md` page rules, quality guidelines, audit checklist, build inputs. Authoritative for the llmstxt skill.
 
 Humanize is self-contained: `source/skills/humanize/reference/word-lists.md` and `patterns.md` hold the banned vocabulary and structural patterns the pipeline detects.
 
@@ -211,6 +220,7 @@ Skills write persistent state under `.overgrow/` in the user's project. These fi
 - `.overgrow/content-plan.md` — tracker for spawned pages/posts (written by `spawn-pages`, `spawn-blogs`)
 - `.overgrow/internal-links.md` — internal-link plan (written by `spawn-internal-links`)
 - `.overgrow/sitemap-audit.md` — sitemap audit (written by `sitemap` in audit mode)
+- `.overgrow/llmstxt-audit.md` — llms.txt audit (written by `llmstxt` in audit mode)
 
 Skills append or refresh rather than overwriting blindly; prior runs get timestamped archives where it matters.
 

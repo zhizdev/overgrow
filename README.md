@@ -1,6 +1,6 @@
 # Overgrow
 
-The SEO + GEO toolkit that lives inside your AI coding tool. 7 commands to inventory your site, audit it, grow it, and wire it for AI-search citation — all from the editor.
+The SEO + GEO toolkit that lives inside your AI coding tool. 8 commands to inventory your site, audit it, grow it, and wire it for AI-search citation — all from the editor.
 
 > **Quick start:** In Claude Code, run `/plugin marketplace add zhizdev/overgrow` then `/plugin install overgrow@overgrow`.
 
@@ -18,7 +18,7 @@ Overgrow fights SEO-tool bloat with:
 
 ## What's included
 
-### 7 commands
+### 8 commands
 
 | Command | What it does | Output |
 |---------|--------------|--------|
@@ -28,6 +28,7 @@ Overgrow fights SEO-tool bloat with:
 | `/overgrow:spawn-blogs` | Draft blog posts across the 15 fanout facets (definitional, comparative, how-to, migration, cost, trends, and more) | markdown post files + content-plan entries |
 | `/overgrow:spawn-internal-links` | Build a hub-and-spoke semantic graph; propose (or apply) the missing links with descriptive anchor text | `.overgrow/internal-links.md` |
 | `/overgrow:sitemap` | Audit or build `sitemap.xml` + `robots.txt` per sitemaps.org + Google guidance. Growth-first: every compliant crawler allowed by default | `sitemap.xml`, `robots.txt`, optional audit |
+| `/overgrow:llmstxt` | Audit or build `/llms.txt` per the Howard 2024 proposal — curated, LLM-legible site map consumed by AI assistants at inference | `llms.txt`, optional companion `.md` pages |
 | `/overgrow:humanize` | 4-phase deterministic rule pipeline (vocabulary, sentence structure, structural removal, final checks) | rewritten text + change log |
 
 ### Knowledge base
@@ -40,6 +41,7 @@ Every skill reads authoritative guidance from `knowledge/` before acting. SKILL.
 | [`knowledge/query-fanout.md`](knowledge/query-fanout.md) | 15-facet query fan-out taxonomy extracted from observed Claude / Gemini / ChatGPT search behavior |
 | [`knowledge/pages.md`](knowledge/pages.md) | H-tag hierarchy, AI-overview formatting, answer-block structure, scanability |
 | [`knowledge/sitemap.md`](knowledge/sitemap.md) | Deterministic sitemap + robots.txt pipeline, AI-crawler allowlists |
+| [`knowledge/llms-txt.md`](knowledge/llms-txt.md) | Distilled `/llms.txt` spec — format, section taxonomy, companion `.md` pages, audit checklist |
 
 ### Principles baked in
 
@@ -61,6 +63,7 @@ Every skill reads authoritative guidance from `knowledge/` before acting. SKILL.
 /overgrow:spawn-internal-links    # wire the semantic graph
 /overgrow:humanize                # clean AI-sounding drafts
 /overgrow:sitemap                 # expose everything to search & AI
+/overgrow:llmstxt                 # ship an LLM-legible site map
 ```
 
 ### Scoped runs

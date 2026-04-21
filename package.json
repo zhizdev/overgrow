@@ -1,6 +1,6 @@
 {
   "name": "overgrow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "zhizhuo",
   "description": "SEO + GEO toolkit for growth engineers. Cross-provider skills for site inventory, on-page audit, query-fanout page and blog spawning, semantic internal linking, sitemap/robots, and AI-text humanization.",
   "keywords": [
@@ -11,6 +11,7 @@
     "blog",
     "content-generation",
     "sitemap",
+    "llms-txt",
     "internal-links",
     "query-fanout",
     "humanize",
