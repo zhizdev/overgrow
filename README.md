@@ -1,59 +1,33 @@
-# Overgrow
+# Overgrow - The Scientific AI CMO Plugin
 
-The SEO + GEO toolkit that lives inside your AI coding tool. 8 commands to inventory your site, audit it, grow it, and wire it for AI-search citation — all from the editor.
+Overgrow is your AI CMO as a plugin, with a comprehrensive suite of commands to optimize your SEO and GEO. Overgrow is distilled from human written knolwedge and official web standards documentation. 
 
-> **Quick start:** In Claude Code, run `/plugin marketplace add zhizdev/overgrow` then `/plugin install overgrow@overgrow`.
+**Get Started in Claude Code**
+```
+/plugin marketplace add zhizdev/overgrow
+/plugin install overgrow@overgrow
+```
 
-## Why Overgrow?
+### Commands
+`/overgrow:init`  
+    Scans the repo to build an understanding of the existing project. 
+`/overgrow:audit`  
+    Check titles, meta, H-hierarchy, canonicals, OG, JSON-LD schema, content depth, internal links, AI-citation readiness  
+`/overgrow:spawn-pages`  
+    Draft landing pages that target query fan-out patterns to maximize AI visibility. 
+`/overgrow:spawn-blogs`  
+    Draft blogs that target query fan-out patterns to maximize AI visibility. 
+`/overgrow:spawn-internal-links`  
+    Build a citadel of internals links around semantic pillars. 
+`/overgrow:sitemap`  
+    Audit or build `sitemap.xml` + `robots.txt` to maximize growth.  
+`/overgrow:llmstxt`  
+    Audit or build `/llms.txt` to maximize growth. 
+`/overgrow:humanize`  
+    Make it sounds human. 
 
-Traditional SEO tools live outside your codebase. They flag issues in dashboards, spit out PDFs, and leave the engineering work to someone context-switching between Ahrefs and VS Code. AI-era search makes this worse: ChatGPT, Claude, Perplexity, and Google AI Overviews retrieve from your pages semantically — which means structure, clarity, and citability matter more than ever, and dashboards don't fix those.
+#### Usage examples
 
-Overgrow runs where the code runs. The same skill that finds a thin pillar also drafts the blog posts to fill it. The same skill that flags an orphan page also wires the internal links to un-orphan it. Feedback loop compressed from weeks to minutes.
-
-Overgrow fights SEO-tool bloat with:
-- **A site-aware foundation** — every command reads a structured page inventory derived from your actual framework routes, not a crawl.
-- **Query-fanout generation** — a 15-facet taxonomy of how search and AI answer engines decompose intent, applied to pages and blogs.
-- **A deterministic humanize pipeline** — rule-based cleanup of AI-sounding text with a change log, safe for agentic loops.
-- **Growth-first defaults** — the sitemap skill allows every AI crawler by default. Subtraction is a deliberate choice, not the silent default.
-
-## What's included
-
-### 8 commands
-
-| Command | What it does | Output |
-|---------|--------------|--------|
-| `/overgrow:init` | Scan the repo, detect the framework, enumerate and classify every page, cluster into semantic pillars | `.overgrow/inventory.md` |
-| `/overgrow:audit` | Check titles, meta, H-hierarchy, canonicals, OG, JSON-LD schema, content depth, internal links, AI-citation readiness | `.overgrow/audit.md` |
-| `/overgrow:spawn-pages` | Draft missing core pages (features, solutions, pricing, comparison, integration, trust, about) via query-fanout | markdown page files + `.overgrow/content-plan.md` |
-| `/overgrow:spawn-blogs` | Draft blog posts across the 15 fanout facets (definitional, comparative, how-to, migration, cost, trends, and more) | markdown post files + content-plan entries |
-| `/overgrow:spawn-internal-links` | Build a hub-and-spoke semantic graph; propose (or apply) the missing links with descriptive anchor text | `.overgrow/internal-links.md` |
-| `/overgrow:sitemap` | Audit or build `sitemap.xml` + `robots.txt` per sitemaps.org + Google guidance. Growth-first: every compliant crawler allowed by default | `sitemap.xml`, `robots.txt`, optional audit |
-| `/overgrow:llmstxt` | Audit or build `/llms.txt` per the Howard 2024 proposal — curated, LLM-legible site map consumed by AI assistants at inference | `llms.txt`, optional companion `.md` pages |
-| `/overgrow:humanize` | 4-phase deterministic rule pipeline (vocabulary, sentence structure, structural removal, final checks) | rewritten text + change log |
-
-### Knowledge base
-
-Every skill reads authoritative guidance from `knowledge/` before acting. SKILL.md files are entry summaries; these are the source of truth.
-
-| Knowledge file | Covers |
-|----------------|--------|
-| [`knowledge/geo.md`](knowledge/geo.md) | SEO + GEO master reference — foundations, RAG chunking behavior, content structure, E-E-A-T, technical SEO, authority, AI extraction, schema, measurement |
-| [`knowledge/query-fanout.md`](knowledge/query-fanout.md) | 15-facet query fan-out taxonomy extracted from observed Claude / Gemini / ChatGPT search behavior |
-| [`knowledge/pages.md`](knowledge/pages.md) | H-tag hierarchy, AI-overview formatting, answer-block structure, scanability |
-| [`knowledge/sitemap.md`](knowledge/sitemap.md) | Deterministic sitemap + robots.txt pipeline, AI-crawler allowlists |
-| [`knowledge/llms-txt.md`](knowledge/llms-txt.md) | Distilled `/llms.txt` spec — format, section taxonomy, companion `.md` pages, audit checklist |
-
-### Principles baked in
-
-- **Inventory before opinion.** No skill offers suggestions until `init` has mapped what actually exists.
-- **Pillar-first.** Every page gets one primary pillar. Every spawn and every link proposal is pillar-aware.
-- **GEO-first.** Definitional leads, entity-consistent phrasing, answer-ready Q&A blocks, schema recommendations per page type.
-- **Never fabricate.** No invented customers, stats, logos, testimonials, or certifications. Missing inputs become explicit placeholders.
-- **Deterministic where possible.** Humanize rules, sitemap pipeline, and audit severity tiers produce the same output on the same input.
-
-## Usage examples
-
-### Full workflow on a fresh site
 
 ```
 /overgrow:init                    # build the inventory
@@ -66,28 +40,25 @@ Every skill reads authoritative guidance from `knowledge/` before acting. SKILL.
 /overgrow:llmstxt                 # ship an LLM-legible site map
 ```
 
-### Scoped runs
 
-```
-/overgrow:audit blog                         # audit only blog posts
-/overgrow:audit /pricing                     # audit a single route
-/overgrow:spawn-blogs observability          # expand one pillar
-/overgrow:spawn-pages healthcare             # one vertical solutions page
-/overgrow:spawn-internal-links observability # wire links within one pillar
-/overgrow:sitemap audit                      # check the existing sitemap
-/overgrow:sitemap build https://example.com  # generate new sitemap + robots
-```
-
-### Humanize
+#### Humanize
 
 ```
 /overgrow:humanize "paste AI-generated text here"
 /overgrow:humanize content/blog/new-post.md
 ```
 
-## Installation
+### Designed from First Principles 
 
-### Claude Code (recommended)
+#### The GEO Guide
+We curated hundreds of SEO and GEO best practices from official documentations and tutorials and distilled the essense into the set of skills for overgrow. Each individual primary source is summarized by gpt-5.4 into a few concise bullet points. We then use opus-4.7 to group and cluster all summarized bullet points into a condensed markdown format ready for skill usage at `knowledge/geo.md`.
+
+#### Query Fan-out 
+Web searches on ChatGPT, Gemini, and Claude all use query fan-out to discover releveant content pieces before answering the prompt. We curated a base set of searches covering both specific and broad search intents and capture hundreds of real query fan-out behavior. We distill the behavior into a set of rules for reverse engineering fan-out patterns in `knowledge/query-fanout.md`. Overgrow uses this knowledge to propose new landing, blog, and resources pages.  
+
+### Installation
+
+#### Claude Code (recommended)
 
 ```
 /plugin marketplace add zhizdev/overgrow
@@ -96,7 +67,7 @@ Every skill reads authoritative guidance from `knowledge/` before acting. SKILL.
 
 Commands appear as `/overgrow:init`, `/overgrow:audit`, etc. Update with `/plugin update overgrow@overgrow`, or enable auto-update in `/plugin` → Marketplaces.
 
-### Cursor
+#### Cursor
 
 ```bash
 cp -r .cursor your-project/
@@ -104,7 +75,7 @@ cp -r .cursor your-project/
 
 > Cursor skills require setup: switch to Nightly in Settings → Beta, then enable Agent Skills in Settings → Rules. [Cursor skills docs](https://cursor.com/docs/context/skills)
 
-### Gemini CLI
+#### Gemini CLI
 
 ```bash
 cp -r .gemini your-project/
@@ -112,7 +83,7 @@ cp -r .gemini your-project/
 
 > Gemini CLI requires the preview channel: `npm i -g @google/gemini-cli@preview`, then `/settings` → enable Skills, then `/skills list`. [Gemini CLI skills docs](https://geminicli.com/docs/cli/skills/)
 
-### Codex CLI
+#### Codex CLI
 
 ```bash
 cp -r .codex/* ~/.codex/
@@ -120,7 +91,7 @@ cp -r .codex/* ~/.codex/
 
 > Codex uses a different command prefix: `$overgrow:init`, `$overgrow:audit`, etc.
 
-## Supported tools
+#### Supported tools
 
 - [Claude Code](https://claude.ai/code) — primary, plugin-install
 - [Cursor](https://cursor.com) — drop-in `.cursor/`
@@ -129,9 +100,9 @@ cp -r .codex/* ~/.codex/
 
 One source of truth in `source/skills/`. The build transforms it into each provider's expected layout, frontmatter shape, and placeholder conventions — authored once, shipped four ways.
 
-## Contributing
+### Contributing and Local Workflow
 
-Skills are authored in `source/skills/<name>/SKILL.md`. The four dotfolders at the repo root (`.claude/`, `.cursor/`, `.gemini/`, `.codex/`) are **generated artifacts** — committed to git so end users can install, but never edited by hand.
+Skills are authored in `source/skills/<name>/SKILL.md`. The four dotfolders at the repo root (`.claude/`, `.cursor/`, `.gemini/`, `.codex/`) are **generated artifacts**.
 
 ### Workflow
 
@@ -143,19 +114,6 @@ bun test                            # 103 tests, ~60ms
 git add -A
 git commit -m "..."
 ```
-
-If you only touch `README.md`, `CLAUDE.md`, `.claude-plugin/*.json`, tests, or other non-source files, no rebuild is needed.
-
-### CI enforcement
-
-`.github/workflows/verify-build.yml` runs `bun run rebuild` on every push and PR and fails if the committed dotfolders drift from `source/`. Reproduce locally:
-
-```bash
-bun run rebuild
-git diff --exit-code .claude .cursor .gemini .codex
-```
-
-If that reports a diff, commit it.
 
 ### Architecture
 
@@ -175,4 +133,4 @@ MIT.
 
 ---
 
-Created by [@zhizdev](https://github.com/zhizdev) and [Bonemeal.ai](https://bonemeal.ai/).
+Created by [@zhizdev](https://x.com/zhizdev) and [bonemeal.ai](https://bonemeal.ai/).
