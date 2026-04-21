@@ -1,4 +1,6 @@
-![Overgrow](assets/banner.svg)
+<p align="center">
+  <img src="assets/banner.svg" alt="Overgrow" width="480">
+</p>
 
 # Overgrow - The Scientific AI CMO Plugin
 
