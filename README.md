@@ -1,6 +1,6 @@
-# Overgrow AI CMO Plugin
+# Overgrow - The Scientific AI CMO Plugin
 
-Overgrow is your AI CMO as a plugin, with a comprehrensive suite of commands to optimize your SEO and GEO. 
+Overgrow is your AI CMO as a plugin, with a comprehrensive suite of commands to optimize your SEO and GEO. Overgrow is distilled from human written knolwedge and official web standards documentation. 
 
 **Get Started in Claude Code**
 ```
@@ -50,8 +50,11 @@ Overgrow is your AI CMO as a plugin, with a comprehrensive suite of commands to 
 
 ### Designed from First Principles 
 
-We curated hundreds of SEO and GEO best practices from official documentations and tutorials and distilled the essense into the set of skills for overgrow. 
+#### The GEO Guide
+We curated hundreds of SEO and GEO best practices from official documentations and tutorials and distilled the essense into the set of skills for overgrow. Each individual primary source is summarized by gpt-5.4 into a few concise bullet points. We then use opus-4.7 to group and cluster all summarized bullet points into a condensed markdown format ready for skill usage at `knowledge/geo.md`.
 
+#### Query Fan-out 
+Web searches on ChatGPT, Gemini, and Claude all use query fan-out to discover releveant content pieces before answering the prompt. We curated a base set of searches covering both specific and broad search intents and capture hundreds of real query fan-out behavior. We distill the behavior into a set of rules for reverse engineering fan-out patterns in `knowledge/query-fanout.md`. Overgrow uses this knowledge to propose new landing, blog, and resources pages.  
 
 ### Installation
 
@@ -130,4 +133,4 @@ MIT.
 
 ---
 
-Created by [@zhizdev](https://github.com/zhizdev) and [Bonemeal.ai](https://bonemeal.ai/).
+Created by [@zhizdev](https://x.com/zhizdev) and [bonemeal.ai](https://bonemeal.ai/).
