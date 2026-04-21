@@ -175,4 +175,4 @@ MIT.
 
 ---
 
-Created by [@zhizdev](https://github.com/zhizdev).
+Created by [@zhizdev](https://github.com/zhizdev) and [Bonemeal.ai](https://bonemeal.ai/).
