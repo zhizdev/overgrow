@@ -1,6 +1,6 @@
 ---
 name: spawn-blogs
-description: Given the product and the existing page inventory, identify missing blog topics and generate new blog posts that capture search/AI intent using the query-fanout pattern. Use this skill whenever the user asks to "spawn blogs", "generate blog posts", "expand the blog", "build out a content cluster", "write blog ideas", "cover more search intents", "query fanout for blogs", or wants new long-form content that supports existing pillars. Output is one markdown file per blog post plus an updated content plan.
+description: Given the product and the existing page inventory, identify missing blog topics and generate new blog posts that capture search/AI intent using the query-fanout pattern. Use this skill whenever the user asks to "spawn blogs", "generate blog posts", "expand the blog", "build out a content cluster", "write blog ideas", "cover more search intents", "query fanout for blogs", or wants new long-form content that supports existing pillars. Output is one new post per topic in the project's existing post format (markdown, MDX, component, or CMS migration note), with frontmatter shape mirrored from an existing post.
 ---
 
 # Overgrow — Spawn Blogs (Query Fanout)
@@ -73,7 +73,15 @@ Every post the skill drafts uses this structure — it's tuned for both classic 
 
 ## Output
 
-For each chosen topic, write one markdown file under `content/blog/<slug>.md` (or the blog content root detected in the inventory — respect the project's convention). Use frontmatter matching the project's existing posts; if unsure, default to:
+Before writing anything, read the `Authoring conventions` section of `.overgrow/inventory.md` and open **one existing post in the target blog directory** to mirror its frontmatter shape exactly (key names, order, required fields, tag format, author field, etc.). Do not invent frontmatter keys.
+
+Pick the output format from the detected convention:
+
+- **Markdown / MDX blog** (the common case — Astro content collections, Next.js MDX, Nuxt Content, Hugo, Jekyll, Gatsby, Docusaurus): write `.md` or `.mdx` at the blog content root, using the inventory's recorded extension. Frontmatter matches an existing post's shape 1:1 — if existing posts use `description` not `excerpt`, use `description`; if they use `publishedAt` not `date`, use `publishedAt`; if they add `author`, add `author`.
+- **Component-based blog** (rare — e.g. each post is a `.tsx` / `.astro` route with prose components): mirror the pattern of an existing post component, including layout wrapper, MDX-component use, and metadata export.
+- **CMS-driven blog** (Contentful, Sanity, Payload, WordPress, etc.): do not write a file. Append a migration note to `.overgrow/content-plan.md` under `## CMS migrations` with the full post body plus field-by-field mapping to the CMS model.
+
+If no existing posts exist yet, fall back to this default frontmatter (and flag in content-plan that the project should standardize):
 
 ```markdown
 ---
@@ -90,6 +98,8 @@ draft: true
 <body — following the structure above>
 ```
 
+Use the project's draft gating idiom: if existing posts use `draft: true`, use it; if they use `published: false`, use that; if the project has no draft mechanism, add a `TODO: review before shipping` comment at the top of the body.
+
 Then update `.overgrow/content-plan.md` (create if missing) with an entry per spawned post:
 
 ```markdown
@@ -98,7 +108,7 @@ Then update `.overgrow/content-plan.md` (create if missing) with an entry per sp
 - [ ] <slug> — <title> — intent: <branch> — status: drafted <YYYY-MM-DD>
 ```
 
-Leaving posts as `draft: true` is intentional — the user should run `audit` and `humanize` before publishing.
+Leaving posts gated (via the project's existing draft mechanism or a TODO comment) is intentional — the user should run `audit` and `humanize` before publishing.
 
 ## Writing guidelines
 
@@ -113,5 +123,6 @@ Leaving posts as `draft: true` is intentional — the user should run `audit` an
 
 - Does not generate landing or product pages (that's `spawn-pages`).
 - Does not add internal links across existing pages (that's `spawn-internal-links`). It only adds outbound links from the new posts it drafts.
-- Does not publish. Posts ship with `draft: true` and land in the repo for review.
+- Does not publish. Posts ship gated behind the project's existing draft mechanism (or a TODO comment if none exists) and land in the repo for review.
 - Does not invent facts, customers, or stats.
+- Does not invent frontmatter keys. If an existing post is available, its shape is the source of truth — copy it exactly.

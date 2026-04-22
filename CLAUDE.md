@@ -228,7 +228,7 @@ Skills append or refresh rather than overwriting blindly; prior runs get timesta
 
 ## Content principles (applies to every skill output)
 
-- **Content and structure, not code.** Output is copy blocks, meta tags, heading structures, schema recommendations — not HTML/React/CSS unless explicitly asked.
+- **Match the project's page style.** Detect how existing pages are authored — markdown frontmatter, Next.js components, Astro, SvelteKit, CMS — and emit new pages in the same idiom, importing the same layouts and reusable section components the project already ships. Never dump unrelated markdown into a `content/` directory when the project ships components.
 - **GEO-friendly patterns by default.** Definitional leads, entity clarity, Q&A blocks, schema.org hints, semantic heading hierarchy, citable claims, explicit `datePublished` / `dateModified` where freshness matters.
 - **Never invent customers, stats, logos, testimonials, compliance certifications, or integrations.** If a fact is missing, placeholder it with an explicit marker.
 - **Humanize rules are deterministic.** If a rule feels wrong, update `source/skills/humanize/reference/` — do not inline creative rewrites.
