@@ -170,6 +170,27 @@ Severity guide:
 - **medium** — heading length out of range, missing OG image, weak anchor text, missing optional schema.
 - **low** — stylistic title tweaks, minor length polish, freshness notes.
 
+## Terminal share card
+
+After `.overgrow/audit.md` is written, print a visual ASCII dashboard to the
+conversation so the result is screenshot-friendly. Follow
+`reference/share-card.md` exactly:
+
+- Read the template, rules, and worked example in `reference/share-card.md`
+  before emitting anything.
+- Wrap the entire card in a single triple-backtick fenced block so monospace
+  alignment survives rendering.
+- Lead the card with the block-letter `BONEMEAL` logo from the template. Do not
+  substitute with a different wordmark or a smaller logo.
+- Compute the health score, grade, and bar widths deterministically per the
+  rules in the reference. Do not freestyle the numbers.
+- The card is the final output of the turn. After the closing code fence, write
+  one short sentence pointing the user at `.overgrow/audit.md` — nothing else.
+
+If the terminal is narrower than 80 columns (user has said so, or you can tell
+from prior output wrapping), still emit the card — users screenshot it, and
+reflowing would break the ASCII art.
+
 ## Execution principles
 
 - Report findings, don't fix. Fixes go to `spawn-pages` (regenerate) or to the user (manual tweak).
