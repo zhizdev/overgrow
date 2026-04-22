@@ -1,6 +1,6 @@
 ---
 name: spawn-pages
-description: Given the product offering and existing page inventory, create new core landing and resource pages (homepage refresh, features, solutions, pricing, comparison, resource hubs, about) that capture core product intent using the query-fanout pattern. Use this skill whenever the user asks to "spawn pages", "generate landing pages", "create marketing pages", "build a pricing page", "add a solutions page", "build out the site", "fill in missing pages", or wants new top-level marketing/product pages. Output is one markdown file per page plus an updated content plan.
+description: Given the product offering and existing page inventory, create new core landing and resource pages (homepage refresh, features, solutions, pricing, comparison, resource hubs, about) that capture core product intent using the query-fanout pattern. Use this skill whenever the user asks to "spawn pages", "generate landing pages", "create marketing pages", "build a pricing page", "add a solutions page", "build out the site", "fill in missing pages", or wants new top-level marketing/product pages. Output is one new page per route in the project's native file format (component or markdown), matching the existing page style and framework idiom.
 ---
 
 # Overgrow — Spawn Pages (Core Marketing & Product Pages)
@@ -65,19 +65,44 @@ For page types **not** covered there — comparison, integration landing, securi
 
 ## Required output per page
 
-For every spawned page, write one markdown file at the project's conventional route location (detected from the inventory — e.g. `app/solutions/<slug>/page.md`, `content/pages/<slug>.md`, `src/pages/<slug>.md`). Respect the project's framework. If unsure, place under `content/pages/<slug>.md` and note the intended route in a comment.
+Before writing anything, read the `Authoring conventions` section of `.overgrow/inventory.md` and open **at least one existing page in the same route group** to mirror its imports, layout wrapper, metadata pattern, styling convention, and use of reusable section components. Never guess the idiom — copy it from what's already shipping.
 
-Every page file ships with:
+Pick the output format from the inventory's detected framework:
 
-- **SEO metadata block**: title (50-60 chars), meta description (120-158 chars), URL slug, primary keyword, 3-5 secondary keywords, OG title, OG description, OG image dimensions note.
-- **Heading hierarchy** following `knowledge/pages.md` — one H1, H2 per major section, H3 only where needed.
-- **Schema recommendation** — JSON-LD type(s) the dev should implement.
-- **Body copy** per the template for that page type.
-- **Internal links** — at least 2-3 outbound links to routes that appear in `.overgrow/inventory.md`. Never invent routes. Leave descriptive anchor text.
-- **Placeholder markers** — for any fact, stat, logo, or testimonial that was not supplied by the user, use `<!-- placeholder: replace with real <thing> -->` and list all placeholders at the bottom of the file.
-- **draft flag** (where the project uses frontmatter drafts): `draft: true`.
+### Component-first projects (Next.js App Router `.tsx`, SvelteKit `+page.svelte`, Astro `.astro`, Nuxt `.vue`, Remix, etc.)
 
-Then update `.overgrow/content-plan.md` with an entry for each spawned page under a `## Pages` section.
+Emit a real page component at the framework's expected route path:
+- Next.js App Router: `app/<route>/page.tsx` (or `.jsx` / `.mdx` if that's what the project uses).
+- Next.js Pages Router: `pages/<route>.tsx`.
+- SvelteKit: `src/routes/<route>/+page.svelte`.
+- Astro: `src/pages/<route>.astro`.
+- Nuxt: `pages/<route>.vue`.
+
+The component must:
+- Import the same layout wrapper the existing pages use.
+- Put metadata where the framework expects it: Next.js `export const metadata = { ... }`, SvelteKit `<svelte:head>`, Astro frontmatter + `<SEO>` component, Nuxt `useHead()` / `definePageMeta()`.
+- Compose from the project's existing reusable section components when they exist (`<Hero />`, `<FeatureGrid />`, `<Pricing />`, `<CTA />`, `<FAQ />`) — pass copy in as props. If a needed primitive is missing, inline the section as JSX/Svelte/Astro markup in the same style used elsewhere in the repo, not as raw HTML.
+- Use the project's styling convention exactly: Tailwind class strings, CSS modules, styled-components, UnoCSS — whatever `Authoring conventions` says.
+- Include JSON-LD via a `<script type="application/ld+json">` block or the project's existing schema helper.
+
+### Markdown / MDX content-driven projects (Astro content collections, Next.js `app/**/page.mdx`, Nuxt Content, Hugo, Jekyll, Gatsby MDX, Docusaurus)
+
+Emit `.md` or `.mdx` at the content root used by the project (detected from the inventory — e.g. `src/content/pages/<slug>.md`, `content/pages/<slug>.mdx`). Match the **exact frontmatter shape** used by an existing page in the same collection (key names, order, required fields). Body uses the project's MDX components if any are in use.
+
+### CMS-driven projects (Contentful, Sanity, Payload, Strapi, WordPress, etc.)
+
+Do not write a file. Instead append a **migration note** to `.overgrow/content-plan.md` under a `## CMS migrations` section, with field-by-field copy mapped to the CMS model the user is using, plus the target route and which CMS content type to create it in.
+
+### Every output includes
+
+- **SEO metadata**: title (50-60 chars), meta description (120-158 chars), URL slug, primary keyword, 3-5 secondary keywords, OG title, OG description, OG image note — expressed in the idiom above (metadata export / frontmatter / CMS fields).
+- **Heading hierarchy** per `knowledge/pages.md` — one H1, H2 per major section, H3 only where needed.
+- **JSON-LD schema** — for component output, inline a `<script type="application/ld+json">` block or use the project's schema helper. For markdown output, include a `jsonLd:` field in frontmatter if the project supports it, otherwise leave a clearly labeled block at the top of the body.
+- **Internal links** — at least 2-3 outbound links to routes that appear in `.overgrow/inventory.md`. Never invent routes. Use the project's link primitive (`<Link>`, `<a>`, `[text](route)`).
+- **Placeholder markers** — for any fact, stat, logo, or testimonial not supplied by the user, use `{/* placeholder: replace with real <thing> */}` in JSX, `<!-- placeholder: replace with real <thing> -->` in markdown/Astro/Svelte template regions, or the framework's comment syntax. List all placeholders at the bottom of the file or in a `TODO` block.
+- **Draft gating**: for markdown projects with a `draft` frontmatter convention, set `draft: true`. For component projects, add a `// TODO: review before shipping` header comment — the reviewer's signal, not a framework mechanism.
+
+Then update `.overgrow/content-plan.md` with an entry for each spawned page under a `## Pages` section, noting the output file path and format (component / markdown / CMS migration).
 
 ## Intent-to-page mapping cheat sheet
 
@@ -104,4 +129,5 @@ Then update `.overgrow/content-plan.md` with an entry for each spawned page unde
 - Does not generate blog posts or long-form content (that's `spawn-blogs`).
 - Does not add internal links across existing pages (that's `spawn-internal-links`).
 - Does not run the SEO audit or humanize pass — run `audit` and `humanize` on new pages before publishing.
-- Does not publish or deploy. All output is draft markdown in the repo.
+- Does not publish or deploy. Output lands in the repo in the project's native format, gated behind a draft flag or TODO comment for human review.
+- Does not invent layout wrappers, UI primitives, or utility helpers that aren't already in the project. If a needed component is missing, inline the section in the idiom the rest of the site uses and flag it in the content plan.

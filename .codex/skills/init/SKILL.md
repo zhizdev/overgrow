@@ -26,9 +26,10 @@ A single file at `.overgrow/inventory.md` with these sections:
 
 1. **Product summary** — company/product name, one-line value prop, target audiences, primary verticals, key differentiators.
 2. **Tech stack & routing conventions** — framework (Next.js, Astro, Nuxt, SvelteKit, MDX blog, Hugo, Jekyll, WordPress export, etc.), where pages live, how routes are generated, any i18n conventions.
-3. **Page inventory** — every public page grouped by category, with route, source file path, H1 / current title, current meta description (if any), and one-line purpose.
-4. **Content gaps** — missing page types relative to the product (no pricing page, no solutions pages, thin blog, missing comparison pages, etc.).
-5. **Semantic pillars** — the 3-7 core topical areas the site should own, derived from the product and the existing content.
+3. **Authoring conventions** — how existing pages and posts are actually authored: file extension in use, layout/wrapper imports, metadata pattern, styling convention, reusable section components. This is the signal the spawn skills read to decide whether to emit `.tsx`, `.astro`, `.svelte`, `.mdx`, `.md`, or a CMS migration note.
+4. **Page inventory** — every public page grouped by category, with route, source file path, H1 / current title, current meta description (if any), and one-line purpose.
+5. **Content gaps** — missing page types relative to the product (no pricing page, no solutions pages, thin blog, missing comparison pages, etc.).
+6. **Semantic pillars** — the 3-7 core topical areas the site should own, derived from the product and the existing content.
 
 Other overgrow skills (`audit`, `spawn-pages`, `spawn-blogs`, `spawn-internal-links`, `sitemap`) read this file to avoid duplicating work.
 
@@ -124,6 +125,26 @@ _Framework: <detected framework + version>_
 - **i18n:** <none | locales list>
 - **CMS:** <none | name — how content is fetched>
 
+## Authoring conventions
+
+Read 2-3 representative existing pages (one landing page and one blog post if both exist) and record:
+
+- **Landing / product pages**
+  - **File extension:** <.tsx | .jsx | .astro | .svelte | .vue | .mdx | .md>
+  - **Layout wrapper:** <import path, or "none" — e.g. `import Layout from '@/components/Layout'` | `<Layout>` in Astro | `+layout.svelte` | root layout in Next.js App Router>
+  - **Metadata pattern:** <Next.js `export const metadata` | Next.js `<Head>` | SvelteKit `<svelte:head>` | Astro frontmatter + `<SEO>` | markdown frontmatter | CMS field>
+  - **Styling:** <Tailwind | CSS modules | styled-components | vanilla CSS | UnoCSS | etc.>
+  - **Reusable section components found:** <e.g. `<Hero />`, `<FeatureGrid />`, `<CTA />`, `<FAQ />` — with source paths, or "none">
+  - **Example page to mirror:** <source path of a good representative page>
+- **Blog posts**
+  - **File extension:** <.md | .mdx | .tsx | CMS>
+  - **Frontmatter shape:** <exact keys and order from an existing post, e.g. `title, description, date, author, tags, draft`>
+  - **Content source:** <filesystem | Contentful | Sanity | Payload | WordPress | Strapi | etc.>
+  - **Example post to mirror:** <source path>
+- **Placeholder idiom to use in new files:** <`{/* placeholder: ... */}` for JSX | `<!-- placeholder: ... -->` for markdown/Astro/Svelte template regions>
+
+If the site has no existing blog posts or no existing landing pages, mark that sub-block as "none yet — spawn skills should match the other authoring branch."
+
 ## Page inventory
 
 ### Homepage
@@ -164,13 +185,14 @@ _Framework: <detected framework + version>_
 1. Read `.overgrow/inventory.md` if it exists — ask the user whether to refresh or append before overwriting.
 2. Detect framework and routing conventions.
 3. Enumerate all page source files with Glob.
-4. For each file, extract route + H1 + title + meta + purpose. Skip API routes, middleware, layouts, and `_*` helper files.
-5. Classify into the taxonomy above.
-6. Derive the product summary.
-7. Cluster into semantic pillars.
-8. Identify content gaps.
-9. Write the inventory file. Create the `.overgrow/` directory if missing.
-10. Print a short summary to the user: page count per category, pillar count, top 3 gaps.
+4. Read 2-3 representative page files in full to capture authoring conventions (layout imports, metadata pattern, styling, reusable section components, frontmatter shape for posts).
+5. For each file, extract route + H1 + title + meta + purpose. Skip API routes, middleware, layouts, and `_*` helper files.
+6. Classify into the taxonomy above.
+7. Derive the product summary.
+8. Cluster into semantic pillars.
+9. Identify content gaps.
+10. Write the inventory file including the `Authoring conventions` section. Create the `.overgrow/` directory if missing.
+11. Print a short summary to the user: page count per category, pillar count, top 3 gaps.
 
 ## What this skill does NOT do
 
