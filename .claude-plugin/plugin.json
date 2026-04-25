@@ -8,5 +8,6 @@
   "homepage": "https://github.com/zhizdev/overgrow",
   "repository": "https://github.com/zhizdev/overgrow",
   "license": "MIT",
-  "skills": "./.claude/skills"
+  "skills": "./.claude/skills",
+  "mcpServers": "./.mcp.json"
 }
