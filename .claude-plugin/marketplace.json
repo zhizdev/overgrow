@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "overgrow",
-      "description": "SEO + GEO toolkit for growth engineers. 8 skills (init, audit, spawn-pages, spawn-blogs, spawn-internal-links, sitemap, llmstxt, humanize) to inventory pages, audit on-page signals, spawn landing pages and blogs via query-fanout, wire semantic internal links, build sitemap/robots, generate llms.txt, and humanize AI-sounding copy.",
+      "description": "SEO + GEO toolkit for growth engineers. 9 skills (init, audit, grow, spawn-pages, spawn-blogs, spawn-internal-links, sitemap, llmstxt, humanize) to inventory pages, audit on-page signals, build the Bonemeal action queue (/grow), spawn landing pages and blogs via query-fanout, wire semantic internal links, build sitemap/robots, generate llms.txt, and humanize AI-sounding copy.",
       "version": "0.4.0",
       "author": {
         "name": "zhizhuo"
