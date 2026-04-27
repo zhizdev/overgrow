@@ -1,0 +1,12 @@
+# Overgrow → Bonemeal MCP server (Codex CLI)
+#
+# Codex CLI loads .codex/config.toml as a project-scoped override once the
+# project is trusted (Codex prompts on first run). On first MCP call Codex
+# drives the OAuth login flow itself — RFC 9728 protected-resource discovery,
+# dynamic client registration, PKCE — using `scopes` and `oauth_resource`
+# below. No bearer token paste required.
+
+[mcp_servers.overgrow]
+url = "https://bonemeal.ai/api/mcp/mcp"
+scopes = ["mcp"]
+oauth_resource = "https://bonemeal.ai/api/mcp"

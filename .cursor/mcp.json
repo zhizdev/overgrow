@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "overgrow": {
+      "url": "https://bonemeal.ai/api/mcp/mcp"
+    }
+  }
+}

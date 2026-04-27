@@ -78,6 +78,8 @@ cp -r .cursor your-project/
 ```
 
 > Cursor skills require setup: switch to Nightly in Settings → Beta, then enable Agent Skills in Settings → Rules. [Cursor skills docs](https://cursor.com/docs/context/skills)
+>
+> The drop-in includes `.cursor/mcp.json` wiring the Bonemeal MCP server (powers `/grow`). Cursor handles OAuth / dynamic client registration on first tool call.
 
 #### Gemini CLI
 
@@ -86,14 +88,18 @@ cp -r .gemini your-project/
 ```
 
 > Gemini CLI requires the preview channel: `npm i -g @google/gemini-cli@preview`, then `/settings` → enable Skills, then `/skills list`. [Gemini CLI skills docs](https://geminicli.com/docs/cli/skills/)
+>
+> The drop-in includes `.gemini/settings.json` wiring the Bonemeal MCP server with `oauth.enabled = true`, so Gemini CLI runs the discovery + DCR + PKCE flow itself.
 
 #### Codex CLI
 
 ```bash
-cp -r .codex/* ~/.codex/
+cp -r .codex your-project/
 ```
 
 > Codex uses a different command prefix: `$overgrow:init`, `$overgrow:audit`, etc.
+>
+> The drop-in includes `.codex/config.toml`, which Codex loads as a project-scoped override once the project is trusted (Codex prompts on first run). The `mcp_servers.overgrow` entry uses Codex's built-in OAuth login (`scopes` + `oauth_resource`), so on first `$overgrow:grow` call Codex opens a browser for consent — no bearer token to paste.
 
 #### Supported tools
 
