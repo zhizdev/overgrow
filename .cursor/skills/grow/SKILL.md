@@ -11,36 +11,45 @@ This skill is the integration point between the Bonemeal MCP server and the rest
 ## Prerequisites
 
 1. The user must already have authenticated the bonemeal MCP server. If `mcp__overgrow__list_projects` is unavailable, tell them to run `/mcp` and authenticate the `overgrow` server, then re-invoke this skill.
-2. State file lives at `.overgrow/bonemeal.json` in the repo root. Create it on first run.
+2. Two state files. Create on first run.
 
-## State file shape
+## State files
 
-`.overgrow/bonemeal.json`:
+State is split into project-scoped (committed to git, shared across collaborators) and developer-scoped (per-machine).
 
+**`.overgrow/bonemeal.json`** (in repo root, committed)
 ```json
 {
   "project_id": "<uuid>",
-  "project_name": "<for log lines>",
+  "project_name": "<for log lines>"
+}
+```
+Identifies which Bonemeal project this repo represents. Same answer for every developer who clones the repo, so it belongs in version control.
+
+**`~/.config/overgrow/preferences.json`** (per-developer, never committed)
+```json
+{
   "auto_complete": true | false | null
 }
 ```
+Each developer's personal answer to "should /grow auto-mark actions complete in Bonemeal?". `null` until they answer, then `true` ("always") or `false` ("ask each time").
 
-- `project_id` — once chosen, persisted so we don't ask every run.
-- `auto_complete` — `null` first run; flips to `true` if the user replies "always", `false` if they reply "ask each time". Determines whether to confirm before calling `mark_action_complete`.
+If `$XDG_CONFIG_HOME` is set, prefer `$XDG_CONFIG_HOME/overgrow/preferences.json` over `~/.config/...`. If running on a system without `~/.config/` (e.g. some Windows setups), fall back to a sensible per-user location and tell the user where you wrote it.
 
-If the file is missing, initialize with `{"project_id": null, "auto_complete": null}` after directory creation.
+Create either file (and parent directories) on first read if missing. Treat unreadable / malformed JSON as "uninitialized" — re-prompt the user for what's needed and rewrite cleanly.
 
 ## Flow
 
 ### 1. Resolve the project
 
-If `state.project_id` is null:
+Read `.overgrow/bonemeal.json`. If `project_id` is null/missing:
 - Call `mcp__overgrow__list_projects` (no arguments).
 - If exactly one project is returned, use it; tell the user "Linking this repo to Bonemeal project: **{name}**".
 - If multiple, present a numbered list with `name`, `workspace.name`, `id`, and call `AskUserQuestion` to ask which one this repo represents.
 - Persist `project_id` and `project_name` to `.overgrow/bonemeal.json`.
+- Suggest the user commit the file so collaborators don't get re-prompted.
 
-If `state.project_id` is set, skip the resolve step. (User can edit the file by hand to relink.)
+If `project_id` is set, skip the resolve step. (User can edit the file by hand to relink.)
 
 ### 2. Pull the queue
 
@@ -128,13 +137,14 @@ After each successful build (file written and saved):
 
    If the routing convention is ambiguous (custom framework), use the file path the user can `git diff` to find it; better than no URL.
 
-2. Determine whether to confirm:
-   - If `state.auto_complete === true`, skip the prompt.
-   - If `state.auto_complete === false`, prompt once per action: "Mark **{title}** complete in Bonemeal? [y/n]".
-   - If `state.auto_complete === null`, prompt once with three options via `AskUserQuestion`: `Yes`, `No`, `Always (don't ask again)`.
-     - On `Always`, set `state.auto_complete = true` and persist before calling.
-     - On `Yes`, leave `auto_complete = null` for this run, but ask again next run (current-run yeses don't change the persistent setting).
-     - On `No`, leave `auto_complete = null` and skip the call for this action.
+2. Determine whether to confirm. Read `auto_complete` from the per-developer
+   preferences file (`~/.config/overgrow/preferences.json` or `$XDG_CONFIG_HOME/overgrow/preferences.json`):
+   - If `auto_complete === true`, skip the prompt.
+   - If `auto_complete === false`, prompt once per action: "Mark **{title}** complete in Bonemeal? [y/n]".
+   - If `auto_complete` is null/missing, prompt once with three options via `AskUserQuestion`: `Yes`, `No`, `Always (don't ask again)`.
+     - On `Always`, write `auto_complete: true` to the preferences file before calling.
+     - On `Yes`, leave `auto_complete` unset for this run, but ask again next run (current-run yeses don't change the persistent setting).
+     - On `No`, leave `auto_complete` unset and skip the call for this action.
 
 3. If confirmed, call `mcp__overgrow__mark_action_complete`:
    - `action_id: <action.id>`
@@ -156,7 +166,7 @@ Print:
 - **MCP not authenticated**: tell the user to run `/mcp`. Don't try to skip and rebuild blindly.
 - **Build failed for an action**: do NOT mark complete. Leave it in `proposed` state so it shows up next run.
 - **Action already marked complete in Bonemeal between fetch and mark**: the MCP tool's UPDATE will no-op and return `isError: true`; treat as a benign skip.
-- **State file corrupted or unreadable**: rebuild it (resolve project again).
+- **State files corrupted or unreadable**: treat as uninitialized — re-prompt and rewrite cleanly. The two files are independent; a broken `preferences.json` doesn't invalidate the project link, and vice versa.
 
 ## Conventions
 
