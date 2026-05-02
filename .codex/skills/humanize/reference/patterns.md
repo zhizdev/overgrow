@@ -231,7 +231,7 @@ Full block pattern to recognize and delete:
 Block structure:
   Sentence 1: "[Subject], despite [positive attribute], faces [challenges including]..."
   Sentence 2: [List of vague challenges -- pollution, funding, competition]
-  Sentence 3: "Despite these challenges, [subject] continues to thrive/grow/serve..."
+  Sentence 3: "Despite these challenges, [subject] continues to thrive$grow/serve..."
 
 Action: Delete Sentences 1 and 3. Evaluate Sentence 2:
   - If challenges are named with specifics (e.g., "a 2023 funding cut of $4M") -> keep
