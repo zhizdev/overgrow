@@ -116,12 +116,13 @@ Leaving posts gated (via the project's existing draft mechanism or a TODO commen
 
 ## Surface the new post in existing index/list locations
 
-A new post that nothing else links to is invisible. After writing the file, find every place on the site that already lists blog posts and add the new entry there too. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, date, and excerpt.
+A new post that nothing else links to is invisible. After writing the file, find every place on the site that already lists blog posts and add the new entry there too when appropriate. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, date, excerpt, any fields
+to make the new page fit in cohesively.
 
 Check, in order:
 
 - **Footer link lists.** Open the footer component (`Footer.tsx`, `footer.astro`, the layout's footer partial, etc.). If it manually lists popular or recent blog posts, add the new post in the same list (and remove the oldest if the list is fixed-length).
-- **Blog index / hub page.** `/blog`, `/posts`, `/articles`, `/resources/blog`. If the index lists posts manually (hard-coded array, JSX list, MDX with explicit links rather than a content-collection query), add the new post.
+- **Blog index / hub page.** `/blog`, `/posts`, `/articles`, `/resources/blog` etc. If the index lists posts manually (hard-coded array, JSX list, MDX with explicit links rather than a content-collection query), add the new post.
 - **Pillar / category index pages.** If the blog is segmented (`/blog/category/<pillar>`, `/blog/topics/<topic>`) and those pages list posts manually, add the new post to the matching category.
 - **Sibling "related posts" sections.** If existing posts in the same pillar manually link to each other in a "Related" or "More on this" block, add the new post there. Skip if related posts are auto-generated from tags/frontmatter.
 

@@ -110,7 +110,7 @@ Then update `.overgrow/content-plan.md` with an entry for each spawned page unde
 
 ## Surface the new page in existing index/list locations
 
-A new page that nothing else links to is invisible. After writing the file, find every place on the site that already lists pages of the same type and add the new entry there too. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, and description.
+A new page that nothing else links to is invisible. After writing the file, find every place on the site that already lists pages of the same type and add the new entry there too. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, description, any fields to make the new page fit in cohesively.
 
 Check, in order:
 
