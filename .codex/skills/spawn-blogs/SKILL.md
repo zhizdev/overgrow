@@ -112,6 +112,22 @@ Then update `.overgrow/content-plan.md` (create if missing) with an entry per sp
 
 Leaving posts gated (via the project's existing draft mechanism or a TODO comment) is intentional — the user should run `audit` and `humanize` before publishing.
 
+## Surface the new post in existing index/list locations
+
+A new post that nothing else links to is invisible. After writing the file, find every place on the site that already lists blog posts and add the new entry there too when appropriate. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, date, excerpt, any fields
+to make the new page fit in cohesively.
+
+Check, in order:
+
+- **Footer link lists.** Open the footer component (`Footer.tsx`, `footer.astro`, the layout's footer partial, etc.). If it manually lists popular or recent blog posts, add the new post in the same list (and remove the oldest if the list is fixed-length).
+- **Blog index / hub page.** `/blog`, `/posts`, `/articles`, `/resources/blog` etc. If the index lists posts manually (hard-coded array, JSX list, MDX with explicit links rather than a content-collection query), add the new post.
+- **Pillar / category index pages.** If the blog is segmented (`/blog/category/<pillar>`, `/blog/topics/<topic>`) and those pages list posts manually, add the new post to the matching category.
+- **Sibling "related posts" sections.** If existing posts in the same pillar manually link to each other in a "Related" or "More on this" block, add the new post there. Skip if related posts are auto-generated from tags/frontmatter.
+
+Skip when the listing is auto-generated from a content collection or filesystem glob (typical for Astro content collections, Next.js MDX route groups, Nuxt Content) — the new file is picked up automatically. Only edit when the listing is manual.
+
+This is **not** general semantic interlinking across the site — that's `spawn-internal-links`. This is just surfacing the new post where posts are already surfaced.
+
 ## Writing guidelines
 
 - Write for a real reader first, then optimize for keyword/entity coverage.
@@ -124,7 +140,7 @@ Leaving posts gated (via the project's existing draft mechanism or a TODO commen
 ## What this skill does NOT do
 
 - Does not generate landing or product pages (that's `spawn-pages`).
-- Does not add internal links across existing pages (that's `spawn-internal-links`). It only adds outbound links from the new posts it drafts.
+- Does not add general semantic internal links across the site (that's `spawn-internal-links`). It does surface the new post in manually maintained index pages, footers, and category lists where posts of the same type are already listed — that's the bare minimum for a new post to be discoverable.
 - Does not publish. Posts ship gated behind the project's existing draft mechanism (or a TODO comment if none exists) and land in the repo for review.
 - Does not invent facts, customers, or stats.
 - Does not invent frontmatter keys. If an existing post is available, its shape is the source of truth — copy it exactly.

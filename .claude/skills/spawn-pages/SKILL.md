@@ -108,6 +108,21 @@ Do not write a file. Instead append a **migration note** to `.overgrow/content-p
 
 Then update `.overgrow/content-plan.md` with an entry for each spawned page under a `## Pages` section, noting the output file path and format (component / markdown / CMS migration).
 
+## Surface the new page in existing index/list locations
+
+A new page that nothing else links to is invisible. After writing the file, find every place on the site that already lists pages of the same type and add the new entry there too. Match the existing entry pattern exactly — copy the markup of an adjacent entry, swap the route, title, description, any fields to make the new page fit in cohesively.
+
+Check, in order:
+
+- **Footer link lists.** Open the footer component (`Footer.tsx`, `footer.astro`, `_layout`'s footer partial, etc.). If it manually lists pages of the same type as the one you spawned (alternatives, integrations, solutions, comparison pages, popular blog posts), add a link to the new page in the same list.
+- **Index / hub pages.** `/alternatives`, `/integrations`, `/solutions`, `/resources`, `/compare`, `/customers`, etc. If a hub page exists for the type you spawned and lists entries manually (a hard-coded array, a JSX list, MDX with manual links), add the new page there.
+- **Sibling cross-links.** If existing alternatives or comparison pages cross-link to each other (e.g. a "More comparisons" section), add the new page to those lists.
+- **Sitemap and route manifests.** If the project maintains a manual `sitemap.xml` or a route array (e.g. for static export or for nav generation), add the new route.
+
+Skip when the listing is auto-generated from a content collection or filesystem glob — the new file is picked up automatically. Only edit when the listing is manual.
+
+This is **not** general semantic interlinking — that's `spawn-internal-links`. This is just surfacing the new page where pages of the same type are already surfaced.
+
 ## Intent-to-page mapping cheat sheet
 
 - Comparison intent (`X vs Y`) → `/compare/<competitor>` or `/alternatives/<competitor>` page.
